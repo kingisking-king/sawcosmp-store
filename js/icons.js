@@ -3,6 +3,48 @@
                   k = outline, w = white, b = wood/brown, g = gray, . = empty */
 window.PIXEL_ICONS = (function () {
   const maps = {
+    bolt: [
+      "......kkkk..",
+      ".....kwaak..",
+      "....klaak...",
+      "...kaaak....",
+      "..kaaakkkk..",
+      ".kaaaaaaak..",
+      ".kkkkaaak...",
+      "....kaadk...",
+      "...kaadk....",
+      "..kaddk.....",
+      "..kadk......",
+      "..kkk......."
+    ],
+    lock: [
+      "....kkkk....",
+      "...kggggk...",
+      "..kgk..kgk..",
+      "..kgk..kgk..",
+      ".kkkkkkkkkk.",
+      ".kwlaaaaadk.",
+      ".klaakkaadk.",
+      ".kaaakkaadk.",
+      ".kaaaakaadk.",
+      ".kaaaaaaadk.",
+      ".kddddddddk.",
+      ".kkkkkkkkkk."
+    ],
+    headset: [
+      "...kkkkkk...",
+      "..kggggggk..",
+      ".kgk....kgk.",
+      "kgk......kgk",
+      "kgk......kgk",
+      "kkkk....kkkk",
+      "kwak....kwak",
+      "klak....klak",
+      "kaak....kaak",
+      "kddk....kddk",
+      "kkkk..kkkkk.",
+      "......kk...."
+    ],
     crown: [
       "............",
       "............",

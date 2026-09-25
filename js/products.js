@@ -9,7 +9,8 @@
      icon      – one of: crown, sword, diamond, emerald, star, key, chest,
                  bundle, pickaxe, heart, shield
      color     – optional accent color for the card (any CSS color)
-     badge     – optional ribbon text, e.g. "Popular" / "Best value"
+     badge     – optional ribbon text, e.g. "Most popular" / "Best value"
+     featured  – optional true: highlighted card (glow + ribbon). Use on 1 per category
      perks     – list of bullet points
      tebexPath – optional path appended to SITE_CONFIG.tebexUrl
                  (e.g. "/package/123456"). Leave out to use the store home.
@@ -25,11 +26,11 @@ window.STORE_PRODUCTS = [
         perks: ["[Iron] rank prefix", "/craft anywhere", "2 extra homes", "+2 auction house slots"]
       },
       {
-        name: "Gold", price: 9.99, icon: "star", color: "#f5c542",
+        name: "Gold", price: 9.99, icon: "star", color: "#ffb000",
         perks: ["Everything in Iron", "[Gold] rank prefix", "/enderchest anywhere", "5 extra homes", "1 monthly Vote Key"]
       },
       {
-        name: "Diamond", price: 19.99, icon: "diamond", color: "#4de1e6", badge: "Popular",
+        name: "Diamond", price: 19.99, icon: "diamond", color: "#22d3ee", badge: "Most popular", featured: true,
         perks: ["Everything in Gold", "[Diamond] rank prefix", "/feed & /anvil", "10 extra homes", "Priority queue"]
       },
       {
@@ -67,7 +68,7 @@ window.STORE_PRODUCTS = [
         perks: ["Iron rank", "5 Vote Keys", "1 Rare Key", "Save ~20%"]
       },
       {
-        name: "Supporter Bundle", price: 24.99, icon: "bundle", color: "#4de1e6", badge: "Best value",
+        name: "Supporter Bundle", price: 24.99, icon: "bundle", color: "#ffb000", badge: "Best value", featured: true,
         perks: ["Diamond rank", "3 Rare Keys", "1 Legendary Key", "Save ~30%"]
       },
       {

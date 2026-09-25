@@ -14,7 +14,9 @@ js/products.js      Every product and price (edit this to change the store)
 js/icons.js         Pixel-art product icons (SVG, no image files needed)
 js/main.js          Rendering, Copy IP, live server status (usually no edits needed)
 assets/logo.png     Full-size logo (transparent PNG)
-assets/logo-512.png Optimized logo used on the page
+assets/logo-512.webp, logo-800.webp  Optimized hero logo (WebP)
+assets/logo-512.png PNG fallback for browsers without WebP
+assets/logo-128.webp/.png  Small logo for nav & footer
 assets/favicon-64.png, assets/icon-192.png, assets/apple-touch-icon.png, favicon.ico
 CNAME               GitHub Pages domain file (unused on Cloudflare Pages, harmless)
 .nojekyll           GitHub Pages helper (harmless)
@@ -47,7 +49,8 @@ Open **`js/products.js`**. It has three categories (`ranks`, `keys`, `bundles`),
   icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest,
                           // bundle, pickaxe, heart, shield
   color: "#4de1e6",       // card accent color (hex)
-  badge: "Popular",       // optional ribbon
+  badge: "Most popular",  // optional ribbon on top of the card
+  featured: true,         // optional: highlighted card (glowing border, gold Buy button)
   perks: ["Everything in Gold", "/feed & /anvil"],
   tebexPath: "/package/123456"   // optional: links straight to that Tebex package
 }
@@ -58,7 +61,7 @@ To add, remove, or reorder products, edit this list. You can also add a whole ne
 **Payments and in-game delivery** go through [Tebex](https://www.tebex.io/). Create your packages there, install the Tebex plugin on the server, and paste each package's URL path into `tebexPath`.
 
 ### Logo
-Replace `assets/logo.png` (full size) and `assets/logo-512.png` (512×512, used on the page) with new transparent PNGs using the same file names. Update the favicons in `assets/` and `favicon.ico` too if you want.
+Replace `assets/logo.png` (full size) plus the resized copies (`logo-512.png`, `logo-512.webp`, `logo-800.webp`, `logo-128.png`, `logo-128.webp`) with new transparent images using the same file names. Update the favicons in `assets/` and `favicon.ico` too if you want.
 
 ### Colors / theme
 All colors are CSS variables at the top of **`css/style.css`** (`--gold`, `--orange`, `--cyan`, `--bg`, `--surface`, ...). Change them there to re-theme the whole site.

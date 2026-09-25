@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SawcoSMP Store — Ranks, Keys &amp; Bundles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SawcoSMP Store: Ranks, Keys &amp; Bundles</title>
   <meta name="description" content="Official store for SawcoSMP, a Minecraft survival multiplayer server. Support the server with ranks, crate keys and bundles.">
   <meta name="theme-color" content="#0B1530">
   <meta property="og:title" content="SawcoSMP Store">
@@ -12,84 +12,116 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" as="image" type="image/webp" href="assets/logo-512.webp" imagesrcset="assets/logo-512.webp 512w, assets/logo-800.webp 800w" imagesizes="(max-width: 600px) 78vw, 460px">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="skip-link" href="#store">Skip to store</a>
 
-  <!-- Dev notice (remove by setting showExampleNotice:false in js/config.js) -->
+  <!-- Dev notice: hide with showExampleNotice:false in js/config.js -->
   <div class="dev-notice" id="devNotice" hidden>
-    <span>⚠ Example products &amp; prices — edit <code>js/products.js</code></span>
+    <span>⚠ Example products &amp; prices. Edit <code>js/products.js</code></span>
     <button type="button" class="dev-notice__close" aria-label="Hide notice" id="devNoticeClose">×</button>
   </div>
 
-  <header class="nav" id="top">
+  <!-- NAV -->
+  <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#top" class="nav__brand" aria-label="SawcoSMP home">
-        <img src="assets/logo-512.png" alt="" width="44" height="44">
-        <span data-config="serverName">SawcoSMP</span>
+        <picture><source srcset="assets/logo-128.webp" type="image/webp"><img src="assets/logo-128.png" alt="" width="44" height="44"></picture>
+        <span class="nav__name"><span class="t-gold">SAWCO</span><span class="t-cyan">SMP</span></span>
       </a>
       <nav class="nav__links" aria-label="Main">
         <a href="#ranks">Ranks</a>
-        <a href="#keys">Keys</a>
+        <a href="#keys">Crates</a>
         <a href="#bundles">Bundles</a>
         <a href="#faq">FAQ</a>
+        <a href="#" data-link="discordUrl" target="_blank" rel="noopener">Discord</a>
       </nav>
-      <a class="btn btn--discord btn--sm" data-link="discordUrl" href="#" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
-        <span>Discord</span>
-      </a>
+      <div class="nav__actions">
+        <button type="button" class="nav__ip" data-copy-ip aria-label="Copy server IP">
+          <span class="dot"></span><span data-config="serverIp"></span>
+        </button>
+        <a href="#store" class="btn btn--gold btn--sm">Store</a>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="container hero__inner">
-        <div class="hero__logo-wrap">
-          <!-- Swap assets/logo.png / logo-512.png to change the logo -->
-          <img class="hero__logo" src="assets/logo-512.png" srcset="assets/logo-512.png 512w, assets/logo.png 974w" sizes="(max-width: 600px) 80vw, 440px" alt="SawcoSMP logo" width="440" height="440">
-        </div>
-        <div class="hero__text">
-          <div class="status" id="status" aria-live="polite">
-            <span class="status__dot"></span>
-            <span class="status__text">Checking server…</span>
-          </div>
-          <h1 class="hero__title"><span class="t-gold">SAWCO</span><span class="t-cyan">SMP</span></h1>
-          <p class="hero__tagline" data-config="tagline"></p>
+    <section class="hero" aria-label="SawcoSMP">
+      <div class="hero__sky" aria-hidden="true">
+        <div class="hero__stars" id="stars"></div>
+        <div class="hero__moon"></div>
+        <div class="hero__clouds" id="clouds" data-parallax="0.25"></div>
+        <div class="hero__terrain hero__terrain--far" data-parallax="0.12"><svg id="terrainFar" preserveAspectRatio="xMidYMax slice"></svg></div>
+        <div class="hero__terrain hero__terrain--near" data-parallax="0.05"><svg id="terrainNear" preserveAspectRatio="xMidYMax slice"></svg></div>
+      </div>
 
-          <div class="ip-box">
-            <div class="ip-box__label">Server IP <span class="ip-box__version" data-config="versionLabel"></span></div>
-            <div class="ip-box__row">
-              <code class="ip-box__ip" data-config="serverIp"></code>
-              <span class="tag tag--warn" id="ipPlaceholderTag" hidden>Placeholder</span>
-              <button type="button" class="btn btn--primary" id="copyIp">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></svg>
-                <span>Copy IP</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="hero__cta">
-            <a href="#store" class="btn btn--cyan">Browse store</a>
-            <a href="#" class="btn btn--ghost" data-link="discordUrl" target="_blank" rel="noopener">Join our Discord</a>
-          </div>
+      <div class="container hero__content">
+        <div class="hero__logo">
+          <div class="hero__glow" aria-hidden="true"></div>
+          <picture>
+            <source type="image/webp" srcset="assets/logo-512.webp 512w, assets/logo-800.webp 800w" sizes="(max-width: 600px) 78vw, 460px">
+            <img src="assets/logo-512.png" srcset="assets/logo-512.png 512w, assets/logo.png 974w" sizes="(max-width: 600px) 78vw, 460px" alt="SawcoSMP" width="460" height="460" fetchpriority="high">
+          </picture>
         </div>
+
+        <p class="hero__tagline" data-config="tagline"></p>
+
+        <button type="button" class="play" data-copy-ip id="playPill" aria-describedby="playHint">
+          <span class="play__status" id="status" data-state="loading">
+            <span class="play__dot"></span>
+            <span class="play__count" id="playerCount">…</span>
+            <span class="play__label" id="statusLabel">checking</span>
+          </span>
+          <span class="play__main">
+            <span class="play__cta">PLAY NOW</span>
+            <span class="play__ip" data-config="serverIp"></span>
+          </span>
+          <span class="play__copy" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></svg>
+          </span>
+        </button>
+        <p class="hero__hint" id="playHint">Click to copy IP · <span data-config="versionLabel"></span> <span class="tag tag--warn" id="ipPlaceholderTag" hidden>Placeholder</span></p>
+
+        <div class="hero__cta">
+          <a href="#store" class="btn btn--gold btn--lg">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM7.2 14h9.9a2 2 0 0 0 1.8-1.1L22 6H5.2l-.9-2H1v2h2l3.6 7.6L5.2 16A2 2 0 0 0 7 19h12v-2H7l1.1-2Z"/></svg>
+            Browse Store
+          </a>
+          <a href="#" class="btn btn--discord btn--lg" data-link="discordUrl" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+            Join Discord
+          </a>
+        </div>
+        <a href="#features" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+      </div>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features" aria-label="Why buy from us">
+      <div class="container features__grid">
+        <div class="feature reveal"><div class="feature__icon" data-icon="bolt" data-color="#ffb000"></div><div><h3>Instant delivery</h3><p>Items arrive in-game within minutes.</p></div></div>
+        <div class="feature reveal"><div class="feature__icon" data-icon="lock" data-color="#22d3ee"></div><div><h3>Secure checkout</h3><p>Payments handled safely by Tebex.</p></div></div>
+        <div class="feature reveal"><div class="feature__icon" data-icon="heart" data-color="#ff5d8f"></div><div><h3>Supports the server</h3><p>Every purchase keeps SawcoSMP online.</p></div></div>
+        <div class="feature reveal"><div class="feature__icon" data-icon="headset" data-color="#7ee081"></div><div><h3>24/7 support</h3><p>Our team is on Discord to help.</p></div></div>
       </div>
     </section>
 
     <!-- STORE -->
     <section class="store" id="store" aria-label="Store">
       <div class="container">
-        <div class="section-head">
+        <header class="section-head reveal">
           <p class="eyebrow">Support the server</p>
-          <h2 class="section-title">Store</h2>
-          <p class="section-sub">Purchases are processed securely by Tebex and delivered in-game automatically. Every purchase helps keep SawcoSMP online.</p>
-        </div>
+          <h2 class="section-title">The <span class="t-gold">Store</span></h2>
+          <div class="pixel-divider" aria-hidden="true"><i></i><i></i><i></i><b></b><i></i><i></i><i></i></div>
+          <p class="section-sub">Choose a rank, crack open some crates, or grab a bundle to save. Perks are delivered to your account automatically.</p>
+        </header>
         <nav class="chips" aria-label="Store categories" id="chips"></nav>
         <div id="storeSections"></div>
       </div>
@@ -97,71 +129,104 @@
 
     <!-- FAQ -->
     <section class="faq" id="faq">
-      <div class="container container--narrow">
-        <div class="section-head">
-          <p class="eyebrow">Questions?</p>
+      <div class="container faq__layout">
+        <header class="section-head section-head--left reveal">
+          <p class="eyebrow">Got questions?</p>
           <h2 class="section-title">FAQ</h2>
+          <div class="pixel-divider pixel-divider--left" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+          <p class="section-sub">Can't find your answer? Ask us on <a href="#" data-link="discordUrl" target="_blank" rel="noopener">Discord</a> and a staff member will help.</p>
+        </header>
+        <div class="faq__list reveal">
+          <details class="faq__item" open>
+            <summary>How do I join the server?</summary>
+            <div class="faq__body"><p>Open Minecraft Java Edition, go to <strong>Multiplayer → Add Server</strong> and paste <code data-config="serverIp"></code>. Hit the <strong>PLAY NOW</strong> button above to copy it.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>How long does delivery take?</summary>
+            <div class="faq__body"><p>Most purchases arrive within a few minutes. Make sure you type your Minecraft username exactly right at checkout. If you're offline, items are delivered the next time you join.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Which payment methods are accepted?</summary>
+            <div class="faq__body"><p>Checkout is handled by Tebex, which supports cards, PayPal and many local payment methods. We never see your payment details.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Are ranks permanent?</summary>
+            <div class="faq__body"><p>Yes, ranks are one-time purchases and stay on your account unless you break the server rules.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Can I get a refund?</summary>
+            <div class="faq__body"><p>All purchases are digital and generally non-refundable. If something went wrong with your order, reach out on Discord and we'll sort it out.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Is this pay-to-win?</summary>
+            <div class="faq__body"><p>No. Perks focus on convenience and quality-of-life, so survival stays fair for everyone. Crate keys can also be earned for free by voting.</p></div>
+          </details>
         </div>
-        <details class="faq__item">
-          <summary>How do I join the server?</summary>
-          <p>Open Minecraft Java Edition, go to <strong>Multiplayer → Add Server</strong> and paste the server IP <code data-config="serverIp"></code>. Hit “Copy IP” above to grab it.</p>
-        </details>
-        <details class="faq__item">
-          <summary>How long does delivery take?</summary>
-          <p>Most purchases arrive within a few minutes. Make sure you type your Minecraft username exactly right at checkout. If you're offline, items are delivered the next time you join.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Which payment methods are accepted?</summary>
-          <p>Checkout is handled by Tebex, which supports cards, PayPal and many local payment methods. We never see your payment details.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Are ranks permanent?</summary>
-          <p>Yes, ranks are one-time purchases and stay on your account unless you break the server rules.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Can I get a refund?</summary>
-          <p>All purchases are digital and generally non-refundable. If something went wrong with your order, reach out on Discord and we'll help sort it out.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Is this pay-to-win?</summary>
-          <p>No. Perks focus on convenience and quality-of-life, so survival stays fair for everyone. Crate keys can also be earned for free by voting.</p>
-        </details>
       </div>
     </section>
 
     <!-- DISCORD CTA -->
-    <section class="cta">
+    <section class="cta" aria-label="Join our Discord">
       <div class="container">
-        <div class="cta__box">
-          <div>
-            <h2 class="cta__title">Join the community</h2>
-            <p>Get announcements, sneak peeks, giveaways and support on our Discord.</p>
+        <div class="cta__box reveal">
+          <div class="cta__text">
+            <p class="eyebrow eyebrow--light">Community</p>
+            <h2 class="cta__title">Join the SawcoSMP Discord</h2>
+            <p>Announcements, sneak peeks, events, giveaways and support. Meet other players before launch.</p>
+            <a class="btn btn--white btn--lg" data-link="discordUrl" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+              Join Discord
+            </a>
           </div>
-          <a class="btn btn--discord btn--lg" data-link="discordUrl" href="#" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
-            <span>Join Discord</span>
-          </a>
+          <div class="cta__art" aria-hidden="true">
+            <svg class="iso" viewBox="0 0 220 200">
+              <g class="iso__block" transform="translate(10 80)">
+                <polygon points="50,0 100,25 50,50 0,25" fill="#6cc24a"/><polygon points="0,25 50,50 50,110 0,85" fill="#7a4a24"/><polygon points="50,50 100,25 100,85 50,110" fill="#5e3818"/>
+                <polygon points="0,25 50,50 50,62 0,37" fill="#58a83a"/><polygon points="50,50 100,25 100,37 50,62" fill="#468a2c"/>
+              </g>
+              <g class="iso__block" transform="translate(110 80)">
+                <polygon points="50,0 100,25 50,50 0,25" fill="#9aa3b5"/><polygon points="0,25 50,50 50,110 0,85" fill="#6c7487"/><polygon points="50,50 100,25 100,85 50,110" fill="#555c6d"/>
+                <rect x="18" y="55" width="8" height="8" fill="#22d3ee"/><rect x="70" y="50" width="8" height="8" fill="#22d3ee"/><rect x="62" y="70" width="6" height="6" fill="#7ff0ff"/>
+              </g>
+              <g class="iso__block iso__block--top" transform="translate(60 22)">
+                <polygon points="50,0 100,25 50,50 0,25" fill="#ffc53d"/><polygon points="0,25 50,50 50,110 0,85" fill="#e08a00"/><polygon points="50,50 100,25 100,85 50,110" fill="#b86b00"/>
+                <polygon points="50,12 76,25 50,38 24,25" fill="#ffe08a"/>
+              </g>
+            </svg>
+            <div class="cta__bubble cta__bubble--a">★ Launch event soon</div>
+            <div class="cta__bubble cta__bubble--b"># announcements</div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer">
-    <div class="container footer__inner">
+    <div class="footer__terrain" aria-hidden="true"></div>
+    <div class="container footer__grid">
       <div class="footer__brand">
-        <img src="assets/logo-512.png" alt="" width="56" height="56">
-        <div>
-          <strong data-config="serverName">SawcoSMP</strong>
-          <p>© <span id="year"></span> SawcoSMP. All rights reserved.</p>
-        </div>
+        <picture><source srcset="assets/logo-128.webp" type="image/webp"><img src="assets/logo-128.png" alt="SawcoSMP" width="72" height="72"></picture>
+        <p>A fresh survival multiplayer server. Build, trade and survive together.</p>
+        <button type="button" class="footer__ip" data-copy-ip><span class="dot"></span><span data-config="serverIp"></span><small>Copy</small></button>
       </div>
-      <nav class="footer__links" aria-label="Footer">
-        <a href="#store">Store</a>
-        <a href="#faq">FAQ</a>
-        <a href="#" data-link="discordUrl" target="_blank" rel="noopener">Discord</a>
+      <nav class="footer__col" aria-label="Store">
+        <h4>Store</h4>
+        <a href="#ranks">Ranks</a>
+        <a href="#keys">Keys &amp; Crates</a>
+        <a href="#bundles">Bundles</a>
         <a href="#" data-link="tebexUrl" target="_blank" rel="noopener">Tebex checkout</a>
       </nav>
-      <p class="footer__legal">Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang AB.</p>
+      <nav class="footer__col" aria-label="Community">
+        <h4>Community</h4>
+        <a href="#" data-link="discordUrl" target="_blank" rel="noopener">Discord</a>
+        <a href="#faq">FAQ</a>
+        <a href="#top">Play now</a>
+      </nav>
+    </div>
+    <div class="container footer__legal">
+      <p>© <span id="year"></span> SawcoSMP. All rights reserved.</p>
+      <p>Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang AB.</p>
     </div>
   </footer>
 
