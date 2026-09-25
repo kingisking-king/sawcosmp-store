@@ -190,7 +190,21 @@
             </article>
           </div>`).join("")}
       </div>
+      <div class="dots" aria-hidden="true">${c.items.map((_, i) => `<i${i ? "" : ' class="is-on"'}></i>`).join("")}</div>
     </section>`).join("");
+
+  /* ---------- Carousel dots (mobile) ---------- */
+  $$(".category").forEach(sec => {
+    const grid = $(".grid", sec), dots = $$(".dots i", sec);
+    grid.addEventListener("scroll", () => {
+      const cards = grid.children;
+      if (!cards.length) return;
+      const step = cards[0].getBoundingClientRect().width + 16;
+      const max = grid.scrollWidth - grid.clientWidth;
+      const idx = grid.scrollLeft >= max - 4 ? cards.length - 1 : Math.round(grid.scrollLeft / step);
+      dots.forEach((d, i) => d.classList.toggle("is-on", i === idx));
+    }, { passive: true });
+  });
 
   /* ---------- 3D tilt on hover (desktop only) ---------- */
   if (finePointer && !reduceMotion) {

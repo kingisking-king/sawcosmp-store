@@ -46,8 +46,8 @@ Open **`js/products.js`**. It has three categories (`ranks`, `keys`, `bundles`),
 {
   name: "Diamond",
   price: 19.99,
-  icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest,
-                          // bundle, pickaxe, heart, shield
+  icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest, bundle,
+                          // pickaxe, heart, shield, obsidian, trophy, helmet, orb, skeletonkey
   color: "#4de1e6",       // card accent color (hex)
   badge: "Most popular",  // optional ribbon on top of the card
   featured: true,         // optional: highlighted card (glowing border, gold Buy button)

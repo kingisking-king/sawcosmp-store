@@ -7,7 +7,8 @@
      name      – product name
      price     – number (e.g. 4.99)
      icon      – one of: crown, sword, diamond, emerald, star, key, chest,
-                 bundle, pickaxe, heart, shield
+                 bundle, pickaxe, heart, shield, obsidian, trophy, helmet,
+                 orb, skeletonkey
      color     – optional accent color for the card (any CSS color)
      badge     – optional ribbon text, e.g. "Most popular" / "Best value"
      featured  – optional true: highlighted card (glow + ribbon). Use on 1 per category
@@ -22,7 +23,7 @@ window.STORE_PRODUCTS = [
     subtitle: "Permanent ranks with perks that support the server.",
     items: [
       {
-        name: "Iron", price: 4.99, icon: "shield", color: "#c9d1d9",
+        name: "Iron", price: 4.99, icon: "shield", color: "#cbd5e1",
         perks: ["[Iron] rank prefix", "/craft anywhere", "2 extra homes", "+2 auction house slots"]
       },
       {
@@ -34,8 +35,24 @@ window.STORE_PRODUCTS = [
         perks: ["Everything in Gold", "[Diamond] rank prefix", "/feed & /anvil", "10 extra homes", "Priority queue"]
       },
       {
-        name: "Netherite", price: 34.99, icon: "crown", color: "#b58cff",
-        perks: ["Everything in Diamond", "[Netherite] rank prefix", "Unlimited homes", "Reserved slot when full", "Monthly Legendary Key"]
+        name: "Netherite", price: 29.99, icon: "sword", color: "#ff5a4e",
+        perks: ["Everything in Diamond", "[Netherite] rank prefix", "/repair hand (daily)", "15 extra homes", "3 monthly Rare Keys"]
+      },
+      {
+        name: "Emerald", price: 39.99, icon: "emerald", color: "#34d399",
+        perks: ["Everything in Netherite", "[Emerald] rank prefix", "/fly in the spawn lobby", "20 extra homes", "+5 auction house slots"]
+      },
+      {
+        name: "Obsidian", price: 54.99, icon: "obsidian", color: "#8b5cf6",
+        perks: ["Everything in Emerald", "[Obsidian] rank prefix", "Reserved slot when full", "/back after death", "1 monthly Epic Key"]
+      },
+      {
+        name: "Legend", price: 74.99, icon: "trophy", color: "#ff4fd8",
+        perks: ["Everything in Obsidian", "[Legend] rank prefix", "Unlimited homes", "/kit legend (weekly)", "1 monthly Legendary Key"]
+      },
+      {
+        name: "Titan", price: 99.99, icon: "helmet", color: "#fde047", badge: "Top tier",
+        perks: ["Everything in Legend", "[Titan] rank prefix", "/repair all (daily)", "+15 auction house slots", "1 monthly Mythic Key"]
       }
     ]
   },
@@ -45,6 +62,10 @@ window.STORE_PRODUCTS = [
     subtitle: "Open crates at spawn for random loot.",
     items: [
       {
+        name: "Common Key ×5", price: 0.99, icon: "key", color: "#cbd5e1",
+        perks: ["5 Common Crate keys", "Food, torches & basic tools", "Chance for iron gear"]
+      },
+      {
         name: "Vote Key ×5", price: 1.99, icon: "key", color: "#7ee081",
         perks: ["5 Vote Crate keys", "Common tools & food", "Chance for enchanted books"]
       },
@@ -53,8 +74,16 @@ window.STORE_PRODUCTS = [
         perks: ["3 Rare Crate keys", "Enchanted gear", "Chance for Mending books"]
       },
       {
-        name: "Legendary Key", price: 5.99, icon: "chest", color: "#f5a742", badge: "Best loot",
-        perks: ["1 Legendary Crate key", "Top-tier loot pool", "Chance for netherite gear"]
+        name: "Epic Key ×3", price: 6.99, icon: "skeletonkey", color: "#b58cff",
+        perks: ["3 Epic Crate keys", "Diamond gear & rare enchants", "Chance for a Totem of Undying"]
+      },
+      {
+        name: "Legendary Key ×2", price: 9.99, icon: "chest", color: "#ffb000", badge: "Best loot",
+        perks: ["2 Legendary Crate keys", "Top-tier loot pool", "Chance for netherite gear"]
+      },
+      {
+        name: "Mythic Key", price: 12.99, icon: "orb", color: "#ff4fd8", badge: "Rarest",
+        perks: ["1 Mythic Crate key", "The best loot on the server", "Chance for an Elytra"]
       }
     ]
   },

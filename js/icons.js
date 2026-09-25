@@ -1,8 +1,79 @@
 /* Pixel-art icons drawn as SVG. Each icon is a 12x12 grid.
    Palette keys:  a = card accent color, l = light highlight, d = dark shade,
-                  k = outline, w = white, b = wood/brown, g = gray, . = empty */
+                  k = outline, w = white, b = wood/brown, g = gray,
+                  o/p = obsidian dark tones, . = empty */
 window.PIXEL_ICONS = (function () {
   const maps = {
+    obsidian: [
+      "kkkkkkkkkkkk",
+      "kopoooaooopk",
+      "koooppooaook",
+      "kaooooopoook",
+      "koolooooopok",
+      "kpoaooaooook",
+      "koooopoooaok",
+      "kooaoooolook",
+      "kpoooaopoook",
+      "koopooooaopk",
+      "koooooaooook",
+      "kkkkkkkkkkkk"
+    ],
+    trophy: [
+      "..kkkkkkkk..",
+      "kkkwlaaaadkk",
+      "kakwlaaaadka",
+      "kakllaaaadka",
+      ".kkaaaaaadk.",
+      "..kaaaaaak..",
+      "...kaaaak...",
+      "....kaak....",
+      "....kddk....",
+      "...kaaaak...",
+      "..kddddddk..",
+      "..kkkkkkkk.."
+    ],
+    helmet: [
+      "...kkkkkk...",
+      "..kwlaaaak..",
+      ".kwlaaaaadk.",
+      "kwlaaaaaaadk",
+      "klaaaaaaaadk",
+      "kaakkkkkkadk",
+      "kaaaaakaaadk",
+      "kaak.kk.kadk",
+      "kaak....kadk",
+      "kddk....kddk",
+      "kkkk....kkkk",
+      "............"
+    ],
+    orb: [
+      "....kkkk....",
+      "..kkaaaakk..",
+      ".kwwlaaaadk.",
+      ".kwlaaaaadk.",
+      "klaaaaaaaadk",
+      "kaaaawaaaadk",
+      "kaaaaaaaaddk",
+      "kaaaaaaadddk",
+      ".kaaaaadddk.",
+      ".kkddddddkk.",
+      "..kkkkkkkk..",
+      "............"
+    ],
+    skeletonkey: [
+      "......kkkk..",
+      ".....kwlaak.",
+      ".....kak.kak",
+      ".....kak.kak",
+      "......kaaak.",
+      ".....kakkk..",
+      "....kak.....",
+      "...kak......",
+      "..kakak.....",
+      ".kak.k......",
+      "kakak.......",
+      ".k.k........"
+    ],
     bolt: [
       "......kkkk..",
       ".....kwaak..",
@@ -213,7 +284,7 @@ window.PIXEL_ICONS = (function () {
   return function render(name, accent) {
     const map = maps[name] || maps.star;
     const a = /^#[0-9a-f]{3,6}$/i.test(accent || "") ? accent : "#7ee081";
-    const pal = { a, l: shade(a, 0.45), d: shade(a, -0.35), k: "#15171c", w: "#ffffff", b: "#8b5a2b", g: "#3a3f4b" };
+    const pal = { a, l: shade(a, 0.45), d: shade(a, -0.35), k: "#15171c", w: "#ffffff", b: "#8b5a2b", g: "#3a3f4b", o: "#1a1033", p: "#2d1b52" };
     let rects = "";
     map.forEach((row, y) => {
       [...row].forEach((ch, x) => {
