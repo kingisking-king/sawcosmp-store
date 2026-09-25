@@ -1,6 +1,6 @@
 # SawcoSMP Store
 
-A fast, static web store for the **SawcoSMP** Minecraft server. Plain HTML/CSS/vanilla JS with no build step, so it runs on GitHub Pages for free.
+A fast, static web store for the **SawcoSMP** Minecraft server. Plain HTML/CSS/vanilla JS with no build step, so it can be hosted for free on Cloudflare Pages.
 
 > ⚠️ All products and prices in `js/products.js` are **example data**. The Tebex and Discord links are **placeholders**.
 
@@ -16,8 +16,8 @@ js/main.js          Rendering, Copy IP, live server status (usually no edits nee
 assets/logo.png     Full-size logo (transparent PNG)
 assets/logo-512.png Optimized logo used on the page
 assets/favicon-64.png, assets/icon-192.png, assets/apple-touch-icon.png, favicon.ico
-CNAME               Custom domain for GitHub Pages (sawcosmp.net)
-.nojekyll           Tells GitHub Pages to serve files as-is
+CNAME               GitHub Pages domain file (unused on Cloudflare Pages, harmless)
+.nojekyll           GitHub Pages helper (harmless)
 screens/            Preview screenshots (desktop.png, mobile.png)
 ```
 
@@ -38,17 +38,17 @@ showExampleNotice: true,                     // set to false to hide the yellow 
 The online/player-count badge uses `https://api.mcsrvstat.us/3/<serverIp>`. If the server is offline or the API can't be reached, it shows "Server offline" or "Status unavailable" instead of breaking.
 
 ### Products and prices
-Open **`js/products.js`**. It has four categories (`ranks`, `keys`, `cosmetics`, `bundles`), and each one holds a list of items:
+Open **`js/products.js`**. It has three categories (`ranks`, `keys`, `bundles`), and each one holds a list of items:
 
 ```js
 {
   name: "Diamond",
   price: 19.99,
-  icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest, cape,
-                          // pet, particle, tag, bundle, pickaxe, heart, shield
+  icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest,
+                          // bundle, pickaxe, heart, shield
   color: "#4de1e6",       // card accent color (hex)
   badge: "Popular",       // optional ribbon
-  perks: ["Everything in Gold", "/nick & /feed"],
+  perks: ["Everything in Gold", "/feed & /anvil"],
   tebexPath: "/package/123456"   // optional: links straight to that Tebex package
 }
 ```
@@ -71,33 +71,24 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Publish on GitHub Pages
+## Hosting on Cloudflare Pages
 
-1. Create a GitHub repository (for example `sawcosmp-store`) and push this folder to the `main` branch.
-2. In the repo, go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Source: Deploy from a branch**, **Branch: `main`**, folder **`/ (root)`**, then click **Save**.
-4. After a minute or so the site is live at `https://<username>.github.io/<repo>/`, or at your custom domain (see below).
+The site is plain static files with no build step. To deploy it:
 
-## Custom domain (Cloudflare)
+1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Pages → Connect to Git**.
+2. Choose the GitHub repo **`kingisking-king/sawcosmp-store`**. Production branch: **`main`**.
+3. Build settings:
+   - **Framework preset:** None
+   - **Build command:** *(leave empty)*
+   - **Build output directory:** `/`
+4. Click **Save and Deploy**. You get a `*.pages.dev` URL right away, and every push to `main` redeploys automatically.
+5. Open the Pages project → **Custom domains → Set up a custom domain**, and enter **`sawcosmp.net`** (add `www.sawcosmp.net` too if you want). The domain's DNS is already on Cloudflare, so the required records and the HTTPS certificate are created automatically. The apex domain works without any manual A records.
 
-The `CNAME` file already contains `sawcosmp.net`, so GitHub Pages will serve the site on the apex domain. In **Settings → Pages → Custom domain**, make sure it says `sawcosmp.net`.
+(The `CNAME` file in the repo is only used by GitHub Pages. Cloudflare Pages ignores it, so it's harmless.)
 
-In the Cloudflare dashboard, go to **sawcosmp.net → DNS → Records** and add:
+### Minecraft server DNS: letting players join with `sawcosmp.net`
 
-| Type  | Name  | Content                      | Proxy status |
-|-------|-------|------------------------------|--------------|
-| A     | `@`   | `185.199.108.153`            | DNS only (grey cloud) |
-| A     | `@`   | `185.199.109.153`            | DNS only (grey cloud) |
-| A     | `@`   | `185.199.110.153`            | DNS only (grey cloud) |
-| A     | `@`   | `185.199.111.153`            | DNS only (grey cloud) |
-| CNAME | `www` | `kingisking-king.github.io`  | DNS only (grey cloud) |
-
-- Leave these records as **DNS only (grey cloud)** until GitHub finishes issuing the HTTPS certificate. Then turn on **Enforce HTTPS** in Settings → Pages. After that, turning on Cloudflare's proxy (orange cloud) is optional. If you do turn it on, set Cloudflare **SSL/TLS** mode to **Full**.
-- Optional: add AAAA records for IPv6 (`2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`).
-
-### Letting players join with `sawcosmp.net`
-
-The apex `sawcosmp.net` now points at GitHub Pages (the website), so the Minecraft server needs **its own hostname** plus an **SRV record**. Minecraft Java looks up the SRV record first, so players can still type `sawcosmp.net`:
+The apex `sawcosmp.net` points at Cloudflare Pages (the website), so the Minecraft server needs **its own hostname** plus an **SRV record**. Minecraft Java looks up the SRV record first, so players can still type `sawcosmp.net`:
 
 | Type | Name                    | Content / Target                                   | Proxy status |
 |------|-------------------------|----------------------------------------------------|--------------|

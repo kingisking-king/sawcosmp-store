@@ -306,9 +306,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
   .hero__tagline { font-size: 16px; }
   .ip-box__row .btn { width: 100%; }
   .hero__cta .btn { flex: 1 1 100%; }
-  .chips { top: 72px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; margin-inline: -14px; padding-inline: 14px; scrollbar-width: none; }
-  .chips::-webkit-scrollbar { display: none; }
-  .chip { flex: none; }
+  .chips { top: 72px; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .chip { padding: 8px 14px; font-size: 13.5px; }
+  .chip span { display: none; }
   /* product rows become swipeable carousels on phones */
   .grid { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px;
           margin-inline: -14px; padding: 8px 14px 18px; scroll-padding-inline: 14px; scrollbar-width: none; }
