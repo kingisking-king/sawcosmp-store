@@ -182,6 +182,10 @@
               <h4 class="card__name">${esc(item.name)}</h4>
               <div class="price" aria-label="${esc(cur)}${Number(item.price).toFixed(2)}">${priceHtml(item.price)}</div>
               <ul class="card__perks">${(item.perks || []).map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+              ${Array.isArray(item.kit) && item.kit.length ? `<button type="button" class="btn btn--kit btn--block" data-kit="${esc(c.id)}:${c.items.indexOf(item)}" aria-haspopup="dialog">
+                <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M1 1h6v6H1zM2 2v1h4V2zm0 2v2h4V4zm1 0h2v1H3z" fill-rule="evenodd"/></svg>
+                Preview kit
+              </button>` : ""}
               <a class="btn btn--buy btn--block" href="${esc(buyUrl(item))}" target="_blank" rel="noopener"
                  aria-label="Buy ${esc(item.name)} for ${esc(cur)}${Number(item.price).toFixed(2)}">
                 Buy now
@@ -192,6 +196,129 @@
       </div>
       <div class="dots" aria-hidden="true">${c.items.map((_, i) => `<i${i ? "" : ' class="is-on"'}></i>`).join("")}</div>
     </section>`).join("");
+
+  /* ---------- Kit preview modal ---------- */
+  // Tiny 8x8 pixel icons for kit items. Palette per icon; "." = empty.
+  const ITEM_ICONS = (() => {
+    const shapes = {
+      ingot:  ["........", "........", "..llll..", ".lmmmmd.", "lmmmmmdd", "dddddddk", "kkkkkkk.", "........"],
+      log:    ["kkkkkkkk", "kmllllmk", "klmddmlk", "kldmmdlk", "kldmmdlk", "klmddmlk", "kmllllmk", "kkkkkkkk"],
+      torch:  ["...ll...", "...lm...", "...md...", "...bb...", "...bb...", "...bb...", "...bb...", "...bd..."],
+      bread:  ["........", "..llll..", ".lmmmml.", "lmdmdmml", "mmmmmmmd", ".dmmmmd.", "..dddd..", "........"],
+      meat:   ["........", "...lmm..", "..lmmmd.", ".lmmmmd.", ".mmmmdd.", "w.mmdd..", "ww.dd...", ".w......"],
+      carrot: [".....gg.", "....g.gg", "....lg..", "...lm...", "..lmd...", ".lmd....", ".md.....", "d......."],
+      coal:   ["........", "..kkkk..", ".kmlmdk.", ".kmmmlk.", ".kdmmmk.", ".kkdmkk.", "..kkkk..", "........"],
+      bottle: ["...kk...", "...bb...", "..kllk..", ".klmmmk.", ".kmmmmk.", ".kmmmdk.", "..kddk..", "...kk..."],
+      gem:    ["...ll...", "..lmml..", ".lmmmmd.", "lmmmmmmd", ".dmmmdd.", "..dmdd..", "...dd...", "........"],
+      block:  ["kkkkkkkk", "kmdmmlmk", "kmmdmmdk", "kldmmmmk", "kmmmdlmk", "kdmmmmmk", "kmmldmdk", "kkkkkkkk"],
+      tag:    [".....kk.", "....kmlk", "...kmmdk", "..kmmmk.", ".kmmmk..", "kwmmk...", "kwwk....", ".kk....."],
+      rocket: ["...ll...", "..lmml..", "..mmmd..", "..wwww..", "..mmmd..", "..mmmd..", "...bb...", "...bb..."],
+      chest:  ["kkkkkkkk", "kmmmmmmk", "kmmmmmmk", "kkkllkkk", "kddllddk", "kddddddk", "kddddddk", "kkkkkkkk"]
+    };
+    const P = (m, l, d, extra) => Object.assign({ k: "#1a1206", m, l, d, w: "#f4efe4", b: "#7a4e22", g: "#3fa34d" }, extra);
+    const items = {
+      "iron ingot": ["ingot", P("#c9ced6", "#f2f4f7", "#8b929c")],
+      "gold ingot": ["ingot", P("#ffc933", "#fff09a", "#c07a00")],
+      "oak log": ["log", P("#b8894a", "#d8b074", "#6b4a26")],
+      "torch": ["torch", P("#ffb000", "#fff3a0", "#ff6a00")],
+      "bread": ["bread", P("#d0913a", "#f0c070", "#8a5a1e")],
+      "cooked beef": ["meat", P("#8a4a2a", "#b87050", "#4e2410")],
+      "cooked porkchop": ["meat", P("#c9875a", "#e8b48a", "#8a5030")],
+      "golden carrot": ["carrot", P("#ffc933", "#fff09a", "#c07a00", { g: "#e8c040" })],
+      "carrot": ["carrot", P("#ff8a1e", "#ffc070", "#b85000")],
+      "coal": ["coal", P("#2e2e34", "#5a5a66", "#18181c", { k: "#0b0b0e" })],
+      "bottle o' enchanting": ["bottle", P("#3ad0a0", "#b8fff0", "#1a7a70", { b: "#8a6a4a", k: "#0d2a33" })],
+      "emerald": ["gem", P("#34d399", "#b6ffdc", "#0f8a5a")],
+      "diamond": ["gem", P("#22d3ee", "#c8fbff", "#0891b2")],
+      "obsidian": ["block", P("#2a1a44", "#6b4aa8", "#140a24", { k: "#08040f" })],
+      "name tag": ["tag", P("#c8a070", "#ecd2a8", "#8a6440", { w: "#f4efe4" })],
+      "firework rocket": ["rocket", P("#e04040", "#ff9a8a", "#8a1a1a", { b: "#7a4e22" })]
+    };
+    const fallback = ["chest", P("#b8894a", "#ffcf4a", "#6b4a26")];
+    return name => {
+      const [shape, pal] = items[String(name).toLowerCase()] || fallback;
+      let rects = "";
+      shapes[shape].forEach((row, y) => [...row].forEach((ch, x) => {
+        if (ch !== "." && pal[ch]) rects += `<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${pal[ch]}"/>`;
+      }));
+      return `<svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true" focusable="false">${rects}</svg>`;
+    };
+  })();
+
+  const kitModal = document.createElement("div");
+  kitModal.className = "kit-modal";
+  kitModal.hidden = true;
+  kitModal.innerHTML = `
+    <div class="kit-modal__backdrop" data-kit-close></div>
+    <div class="kit-modal__panel" role="dialog" aria-modal="true" aria-labelledby="kitTitle" aria-describedby="kitDesc" tabindex="-1">
+      <button type="button" class="kit-modal__close" data-kit-close aria-label="Close kit preview">
+        <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M1 1h1v1h1v1h2V2h1V1h1v1H6v1H5v2h1v1h1v1H6V6H5V5H3v1H2v1H1V6h1V5h1V3H2V2H1z"/></svg>
+      </button>
+      <div class="kit-modal__head">
+        <div class="kit-modal__icon" id="kitIcon" aria-hidden="true"></div>
+        <div>
+          <p class="kit-modal__eyebrow">Daily kit · 24h cooldown</p>
+          <h2 class="kit-modal__title" id="kitTitle"></h2>
+        </div>
+      </div>
+      <p class="kit-modal__desc" id="kitDesc"></p>
+      <ul class="kit-grid" id="kitGrid"></ul>
+      <p class="kit-modal__note">Contents may change as the server is updated.</p>
+    </div>`;
+  document.body.appendChild(kitModal);
+  const kitPanel = $(".kit-modal__panel", kitModal);
+  let kitReturnFocus = null, kitCloseTimer, kitInerted = [];
+
+  function openKit(item, trigger) {
+    clearTimeout(kitCloseTimer);
+    kitReturnFocus = trigger || document.activeElement;
+    kitPanel.style.setProperty("--accent", item.color || "#ffb000");
+    $("#kitIcon").innerHTML = icon(item.icon, item.color);
+    $("#kitTitle").textContent = `${item.name} kit`;
+    const total = item.kit.length;
+    $("#kitDesc").textContent = `Included with the ${item.name} rank. Claim it once every 24 hours. ${total} item stack${total === 1 ? "" : "s"}:`;
+    const slots = Math.max(9, Math.ceil(total / 3) * 3);
+    let html = "";
+    for (let i = 0; i < slots; i++) {
+      const k = item.kit[i];
+      html += k
+        ? `<li class="kit-slot" style="--i:${i}"><span class="kit-slot__icon">${ITEM_ICONS(k.item)}</span><span class="kit-slot__count" aria-hidden="true">${esc(k.amount)}</span><span class="kit-slot__name"><span class="sr-only">${esc(k.amount)} × </span>${esc(k.item)}</span></li>`
+        : `<li class="kit-slot kit-slot--empty" aria-hidden="true"></li>`;
+    }
+    $("#kitGrid").innerHTML = html;
+    kitModal.hidden = false;
+    document.documentElement.classList.add("kit-open");
+    kitInerted = [...document.body.children].filter(el => el !== kitModal && !el.inert);
+    kitInerted.forEach(el => { el.inert = true; });
+    requestAnimationFrame(() => { kitModal.classList.add("is-open"); kitPanel.focus({ preventScroll: true }); });
+  }
+  function closeKit() {
+    if (kitModal.hidden) return;
+    kitModal.classList.remove("is-open");
+    document.documentElement.classList.remove("kit-open");
+    kitInerted.forEach(el => { el.inert = false; });
+    kitInerted = [];
+    kitCloseTimer = setTimeout(() => { kitModal.hidden = true; }, reduceMotion ? 0 : 200);
+    if (kitReturnFocus && kitReturnFocus.focus) kitReturnFocus.focus({ preventScroll: true });
+  }
+  $$("[data-kit]").forEach(btn => btn.addEventListener("click", () => {
+    const [cid, idx] = btn.dataset.kit.split(":");
+    const cat = categories.find(c => c.id === cid);
+    const item = cat && cat.items[+idx];
+    if (item) openKit(item, btn);
+  }));
+  kitModal.addEventListener("click", e => { if (e.target.closest("[data-kit-close]")) closeKit(); });
+  document.addEventListener("keydown", e => {
+    if (kitModal.hidden) return;
+    if (e.key === "Escape") { e.preventDefault(); closeKit(); return; }
+    if (e.key === "Tab") { // keep focus inside the dialog
+      const f = $$('button, [href], [tabindex]:not([tabindex="-1"])', kitPanel);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === kitPanel)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 
   /* ---------- Carousel dots (mobile) ---------- */
   $$(".category").forEach(sec => {
