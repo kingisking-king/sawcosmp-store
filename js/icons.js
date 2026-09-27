@@ -228,6 +228,20 @@ window.PIXEL_ICONS = (function () {
       "............",
       "............"
     ],
+    coin: [
+      "....kkkk....",
+      "..kkaaaakk..",
+      ".kwwlaaaadk.",
+      ".kwlaaaaadk.",
+      "klaaaaaaaadk",
+      "kaaaawaaaadk",
+      "kaaaaaaaaddk",
+      "kaaaaaaadddk",
+      ".kaaaaadddk.",
+      ".kkddddddkk.",
+      "..kkkkkkkk..",
+      "............"
+    ],
     bundle: [
       "....kkkk....",
       "...kbbbbk...",

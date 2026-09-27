@@ -7,7 +7,7 @@
      name      – product name
      price     – number (e.g. 4.99)
      icon      – one of: crown, sword, diamond, emerald, star, key, chest,
-                 bundle, pickaxe, heart, shield, obsidian, trophy, helmet,
+                 bundle, coin, pickaxe, heart, shield, obsidian, trophy, helmet,
                  orb, skeletonkey
      color     – optional accent color for the card (any CSS color)
      badge     – optional ribbon text, e.g. "Most popular" / "Best value"
@@ -71,52 +71,29 @@ window.STORE_PRODUCTS = [
     ]
   },
   {
-    id: "keys",
-    title: "Keys & Crates",
-    subtitle: "Open crates at spawn for random loot.",
+    id: "coins",
+    title: "Coins",
+    subtitle: "EXAMPLE prices — adjust before launch. Spend coins in-game on /coinshop, the auction house and more; earn them by playing.",
     items: [
       {
-        name: "Common Key ×5", price: 0.99, icon: "key", color: "#cbd5e1",
-        perks: ["5 Common Crate keys", "Food, torches & basic tools", "Chance for iron gear"]
+        name: "1,000 Coins", price: 1.99, icon: "coin", color: "#ffb000",
+        perks: ["1,000 coins", "Spend in-game on /coinshop, the auction house & more", "Also earned by playing"]
       },
       {
-        name: "Vote Key ×5", price: 1.99, icon: "key", color: "#7ee081",
-        perks: ["5 Vote Crate keys", "Common tools & food", "Chance for enchanted books"]
+        name: "2,750 Coins", price: 4.99, icon: "coin", color: "#ffb000",
+        perks: ["2,750 coins", "+10% bonus", "Spend in-game on /coinshop, the auction house & more"]
       },
       {
-        name: "Rare Key ×3", price: 3.99, icon: "key", color: "#4da3ff",
-        perks: ["3 Rare Crate keys", "Enchanted gear", "Chance for Mending books"]
+        name: "6,000 Coins", price: 9.99, icon: "coin", color: "#ffd43b", badge: "Most popular", featured: true,
+        perks: ["6,000 coins", "+20% bonus", "Spend in-game on /coinshop, the auction house & more"]
       },
       {
-        name: "Epic Key ×3", price: 6.99, icon: "skeletonkey", color: "#b58cff",
-        perks: ["3 Epic Crate keys", "Diamond gear & rare enchants", "Chance for a Totem of Undying"]
+        name: "13,000 Coins", price: 19.99, icon: "coin", color: "#ffd43b",
+        perks: ["13,000 coins", "+30% bonus", "Spend in-game on /coinshop, the auction house & more"]
       },
       {
-        name: "Legendary Key ×2", price: 9.99, icon: "chest", color: "#ffb000", badge: "Best loot",
-        perks: ["2 Legendary Crate keys", "Top-tier loot pool", "Chance for netherite gear"]
-      },
-      {
-        name: "Mythic Key", price: 12.99, icon: "orb", color: "#ff4fd8", badge: "Rarest",
-        perks: ["1 Mythic Crate key", "The best loot on the server", "Chance for an Elytra"]
-      }
-    ]
-  },
-  {
-    id: "bundles",
-    title: "Bundles",
-    subtitle: "Save money by grabbing a few things at once.",
-    items: [
-      {
-        name: "Starter Bundle", price: 7.99, icon: "pickaxe", color: "#7ee081",
-        perks: ["Iron rank", "5 Vote Keys", "1 Rare Key", "Save ~20%"]
-      },
-      {
-        name: "Supporter Bundle", price: 24.99, icon: "bundle", color: "#ffb000", badge: "Best value", featured: true,
-        perks: ["Diamond rank", "3 Rare Keys", "1 Legendary Key", "Save ~30%"]
-      },
-      {
-        name: "Ultimate Bundle", price: 49.99, icon: "heart", color: "#b58cff",
-        perks: ["Netherite rank", "3 Legendary Keys", "5 Rare Keys", "Save ~35%"]
+        name: "35,000 Coins", price: 49.99, icon: "coin", color: "#ffd43b", badge: "Best value",
+        perks: ["35,000 coins", "+40% bonus", "Spend in-game on /coinshop, the auction house & more"]
       }
     ]
   }

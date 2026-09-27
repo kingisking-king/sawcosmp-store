@@ -40,13 +40,13 @@ showExampleNotice: true,                     // set to false to hide the yellow 
 The online/player-count badge uses `https://api.mcsrvstat.us/3/<serverIp>`. If the server is offline or the API can't be reached, it shows "Server offline" or "Status unavailable" instead of breaking.
 
 ### Products and prices
-Open **`js/products.js`**. It has three categories (`ranks`, `keys`, `bundles`), and each one holds a list of items:
+Open **`js/products.js`**. It has two categories (`ranks` and `coins`), and each one holds a list of items:
 
 ```js
 {
   name: "Diamond",
   price: 19.99,
-  icon: "diamond",        // crown, sword, diamond, emerald, star, key, chest, bundle,
+  icon: "diamond",        // crown, sword, diamond, emerald, star, coin, chest, bundle,
                           // pickaxe, heart, shield, obsidian, trophy, helmet, orb, skeletonkey
   color: "#4de1e6",       // card accent color (hex)
   badge: "Most popular",  // optional ribbon on top of the card
